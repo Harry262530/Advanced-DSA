@@ -1,0 +1,44 @@
+/*Convert to permutation
+You are given an array AA of size NN. In one operation, you can:
+
+Choose an index ii (1\le i \le N)(1≤i≤N) and increase A_iA 
+i
+​
+  by 11.
+Find the minimum number of operations required to convert the array AA into a permutation of size NN. If it is impossible to do so, print -1−1.
+
+Note that a permutation of size NN contains each element from 11 to NN exactly once.*/
+
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int T;
+    
+    cin>>T;
+    for (int i=0;i<T;i++){
+        int n;
+        cin>>n;
+        int arr[n];
+        for (int j=0;j<n;j++){
+            cin>>arr[j];
+        }
+        int res=0;
+        sort(arr,arr+n);
+        for (int k=0;k<n;k++){
+            if ((k+1)-arr[k]<0){
+                res=-1;
+                break;
+            }
+            else if ((k+1)-arr[k]>0){
+                res+=(k+1-arr[k]);
+            }
+            
+        }
+        cout<<res<<endl;
+        
+        
+    }
+	return 0;
+}
