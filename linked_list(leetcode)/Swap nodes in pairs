@@ -1,0 +1,21 @@
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if (head==NULL || head->next==NULL){
+            return head;
+        }
+        ListNode *ford=NULL;
+        ListNode *prev=NULL;
+        ListNode *curr=head;
+        for (int i=0;i<2;i++){
+            ford=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=ford;
+        }
+        if (ford!=NULL){
+            head->next=swapPairs(ford);
+        }
+        return prev;
+    }
+};
