@@ -1,0 +1,40 @@
+class Solution {
+public:
+
+    void insert(Node* &head,Node* &tail,int data){
+        Node *newnode=new Node(data);
+        if (head==NULL){
+            head=newnode;
+            tail=newnode;
+        }
+        else{
+            tail->next=newnode;
+            tail=tail->next;
+        }
+    }
+    Node* copyRandomList(Node* head) {
+        Node *copyhead=NULL;
+        Node *copytail=NULL;
+        Node *temp=head;
+        while (temp!=NULL){
+            insert(copyhead,copytail, temp->val);
+            temp=temp->next;
+        }
+        unordered_map<Node*,Node*> mapping;
+        Node *curr=head;
+        Node *fcurr=copyhead;
+        while (curr!=NULL && fcurr!=NULL){
+            mapping[curr]=fcurr;
+            curr=curr->next;
+            fcurr=fcurr->next;
+        }
+        curr=head;
+        fcurr=copyhead;
+        while (curr!=NULL && fcurr!=NULL){
+            fcurr->random=mapping[curr->random];
+            curr=curr->next;
+            fcurr=fcurr->next;
+        }
+        return copyhead;
+    }
+};
