@@ -1,0 +1,32 @@
+/*saare nodes ko level order mai dusre ka next bna do*/
+
+class Solution {
+public:
+    Node* connect(Node* root) {
+        if (root==NULL){
+            return NULL;
+        }
+        queue<Node *> q;
+        q.push(root);
+        
+        while (!q.empty()){
+            int size=q.size();
+            Node *newnode=NULL;
+            for (int i=size-1;i>=0;i--){
+                Node *temp=q.front();
+                q.pop();
+                temp->next=newnode;
+                newnode=temp;
+                //pehle q ka right push karo taki right se next lgaana start kare
+                if (temp->right){
+                    q.push(temp->right);
+                }
+                if (temp->left){
+                    q.push(temp->left);
+                }
+            }
+            
+        }
+        return root;
+    }
+};
