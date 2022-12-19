@@ -1,0 +1,39 @@
+Given two integer arrays inorder and postorder where inorder is the inorder traversal of a binary tree and postorder is the postorder traversal of the same tree, construct and return the binary tree.
+Input: inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]
+Output: [3,9,20,null,null,15,7]
+
+jo inorder and preorder vaala hai usmai pehle left ke liye call hoga kyuki root ke right mai left ke elements hai
+jo inorder and postorder vala hai usmai pehle root ke right vala call hoga kyuki usmai root ke right ke jo values hai vo pehle aate hai kyuki ham ulta traverse karte hai
+
+                /****************code*****************\
+              
+class Solution {
+public:
+    int position(vector<int> inorder,TreeNode *root){
+        int n=inorder.size();
+        for (int i=0;i<n;i++){
+            if (inorder[i]==root->val){
+                return i;
+            }
+        }
+        return -1;
+    }
+    TreeNode *pi(vector<int> inorder,vector<int> postorder,int &postindex,int si,int ei){
+        if (postindex<0 || si>ei){
+            return NULL;
+        }
+        TreeNode *root=new TreeNode(postorder[postindex]);
+        postindex--;
+        int inindex=position(inorder,root);
+        //pehle right call beacuse postorder mai root se pehle right ke elements hote hai
+        root->right=pi(inorder,postorder,postindex,inindex+1,ei);
+        root->left=pi(inorder,postorder,postindex,si,inindex-1);
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        int n=postorder.size();
+        int postindex=n-1;
+        TreeNode *root1=pi(inorder,postorder,postindex,0,inorder.size()-1);
+        return root1;
+    }
+};
