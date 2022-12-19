@@ -1,0 +1,27 @@
+Given a binary tree, determine if it is 
+height-balanced
+
+Input: root = [3,9,20,null,null,15,7]
+Output: true
+
+
+/*************code***************\
+
+class Solution {
+public:
+    int height(TreeNode *root){
+        if (!root){
+            return 0;
+        }
+        return 1+max(height(root->left),height(root->right));
+    }
+    bool isBalanced(TreeNode* root) {
+        if (!root){
+            return true;
+        }
+        int lh=height(root->left);
+        int rh=height(root->right);
+        return (abs(rh-lh)<=1 && isBalanced(root->left) && isBalanced(root->right));
+        
+    }
+};
