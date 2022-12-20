@@ -1,0 +1,48 @@
+/Striver
+
+You are given the root of a binary search tree (BST), where the values of exactly two nodes of the tree were swapped by mistake. 
+Recover the tree without changing its structure.
+
+Input: root = [3,1,4,null,null,2]
+Output: [2,1,4,null,null,3]
+Explanation: 2 cannot be in the right subtree of 3 because 2 < 3. Swapping 2 and 3 makes the BST valid.
+
+logic:\/ go for inorder traversal and check where the array is not in sorted order ans mark them as first and second to swap with each other
+there can be two posibilities 
+  1: two values that you want to swap will not be adjacent to each other and hence both first and second will come
+  2: two values may be adjacent and hence only first vale will be there which will not be in sorted order so store its previous value in another variable and swap both of them
+  
+  class Solution {
+    TreeNode *prev;
+    TreeNode *first;
+    TreeNode *middle;
+    TreeNode *last;
+public:
+    void inorder(TreeNode *root){
+        if (root==NULL){
+            return ;
+        }
+        inorder(root->left);
+        if (prev!=NULL && root->val<prev->val){
+            if (!first){
+                first=prev;
+                middle=root;
+            }
+            else{
+                last=root;
+            }
+        }
+        prev=root;
+        inorder(root->right);
+    }
+    void recoverTree(TreeNode* root) {
+        prev=NULL;
+        inorder(root);
+        if (first && last){
+            swap(first->val,last->val);
+        }
+        else if (first && middle){
+            swap(first->val,middle->val);
+        }
+    }
+};
