@@ -1,0 +1,67 @@
+Chef has a binary string SS of size NN. Chef can perform the following operation on the string:
+
+Select any substring of size 33 and reverse it.
+Find the minimum distance between any two 11s Chef can achieve, by applying the above operation any (possibly zero) number of times.
+
+Note:
+
+The distance between two characters S_iS 
+i
+​
+  and S_jS 
+j
+​
+  is defined as abs(i-j)abs(i−j).
+It is guaranteed that the string contains at least two occurrences of 11.
+A substring is obtained by deleting some (possibly zero) elements from the beginning and some (possibly zero) elements from the end of the string.
+
+Input
+
+3
+2
+11
+3
+101
+7
+0100101
+
+Output
+1
+2
+1
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t;
+	cin>>t;
+	while(t--){
+	    int n;
+	    cin>>n;
+	    string s;
+	    cin>>s;
+	    stack<char>st;
+	    int flag=0;
+	    for(int i=0; i<n; i++){
+	        if(!st.empty()){
+	            if(s[i]=='1' && st.top()=='1'){
+	                flag=1;
+	                break;
+	            }
+	            else if(s[i]=='0' && st.top()=='0')
+	            st.pop();
+	            else
+	            st.push(s[i]);
+	        }
+	        else
+	        st.push(s[i]);
+	    }
+	    if(flag)
+	    cout<<1<<endl;
+	    else
+	    cout<<2<<endl;
+	}
+	return 0;
+}
