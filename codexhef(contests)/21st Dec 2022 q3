@@ -1,0 +1,62 @@
+Chef visited a grocery store for fresh supplies. There are NN items in the store where the i^{th}i 
+th
+  item has a freshness value A_iA 
+i
+​
+  and cost B_iB 
+i
+​
+ .
+
+Chef has decided to purchase all the items having a freshness value greater than equal to XX. Find the total cost of the groceries Chef buys.
+
+Input
+
+4
+2 20
+15 67
+10 90
+3 1
+1 2 3
+1 2 3
+3 100
+10 90 50
+30 7 93
+4 50
+12 78 50 40
+40 30 20 10
+
+Output
+90
+6
+0
+50
+
+
+#include <iostream>
+using namespace std;
+
+int main() {
+	int t;
+	cin>>t;
+	while (t--){
+	    int n,x;
+	    cin>>n>>x;
+	    int fresh[n];
+	    for (int i=0;i<n;i++){
+	        cin>>fresh[i];
+	    }
+	    int b[n];
+	    for (int i=0;i<n;i++){
+	        cin>>b[i];
+	    }
+	    int cost=0;
+	    for (int i=0;i<n;i++){
+	        if (fresh[i]>=x){
+	            cost+=b[i];
+	        }
+	    }
+	    cout<<cost<<endl;
+	}
+	return 0;
+}
