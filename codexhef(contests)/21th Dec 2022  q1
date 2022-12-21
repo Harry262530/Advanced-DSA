@@ -1,0 +1,31 @@
+The working hours of Chef’s kitchen are from XX pm to YY pm (1 \le X \lt Y \le 12)(1≤X<Y≤12).
+
+Find the number of hours Chef works.
+
+Input
+
+4
+1 2
+3 7
+9 11
+2 10
+
+Output
+1
+4
+2
+8
+
+#include <iostream>
+using namespace std;
+
+int main() {
+	int t;
+	cin>>t;
+	while (t--){
+	    int x,y;
+	    cin>>x>>y;
+	    cout<<y-x<<endl;
+	}
+	return 0;
+}
