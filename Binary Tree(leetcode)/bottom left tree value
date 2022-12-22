@@ -1,0 +1,35 @@
+Given the root of a binary tree, return the leftmost value in the last row of the tree.
+
+Input: root = [1,2,3,4,null,5,6,null,null,7]
+Output: 7
+
+last level ka first element return karna hai
+
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode* root) {
+        int ans=0;
+        if (!root){
+            return ans;
+        }
+        queue<TreeNode*> q;
+        q.push(root);
+        while (!q.empty()){
+            int n=q.size();
+            for (int i=0;i<n;i++){
+                TreeNode *temp=q.front();
+                q.pop();
+                if (i==0){
+                    ans=temp->val;
+                }
+                if (temp->left){
+                    q.push(temp->left);
+                }
+                if (temp->right){
+                    q.push(temp->right);
+                }
+            }
+        }
+        return ans;
+    }
+};
