@@ -1,0 +1,40 @@
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+Input: n = 3
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+
+Logic
+
+A Valid sequence will include the closing paranthesis only when there are more opening paranthesis. Hence, the condition
+if(count2<count1){
+	subseq(count1,count2+1,v+")",ans,n);    
+}
+
+An opening paranthesis is always open to be the part of a valid paranthesis till it has a count less than n.
+As soon as the count of opening paranthesis reaches n, we push all the remaining closing paranthesis into the sequence, because 
+there are no more opening paranthesis to add.
+
+
+class Solution {
+public:
+    void helper(vector<string> &ans,int n,int count1,int count2,string s){
+        if (count1==n){
+            while (count2<n){
+                s+=")";
+                count2++;
+            }
+            ans.push_back(s);
+            return ;
+        }
+        helper(ans,n,count1+1,count2,s+'(');
+        if (count2<count1){
+            helper(ans,n,count1,count2+1,s+')');
+        }
+    }
+    vector<string> generateParenthesis(int n) {
+        vector<string> ans;
+        string s="";
+        helper(ans,n,0,0,s);
+        return ans;
+    }
+};
