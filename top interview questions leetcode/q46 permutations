@@ -1,0 +1,44 @@
+Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+
+Example 1:
+
+Input: nums = [1,2,3]
+Output: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+Example 2:
+
+Input: nums = [0,1]
+Output: [[0,1],[1,0]]
+Example 3:
+
+Input: nums = [1]
+Output: [[1]]
+
+Follow the given steps to solve the problem:
+
+Create a function permute() with parameters as input string, starting index of the string, ending index of the string
+Call this function with values input string, 0, size of string – 1
+In this function, if the value of  L and R is the same then print the same string
+Else run a for loop from L to R and swap the current element in the for loop with the inputString[L]
+Then again call this same function by increasing the value of L by 1
+After that again swap the previously swapped values to initiate backtracking
+
+
+
+class Solution {
+public:
+    void helper(vector<vector<int>> &ans,vector<int> nums,int i){
+        if (i==nums.size()){
+            ans.push_back(nums);
+        }else{
+            for (int j=i;j<nums.size();j++){
+                swap(nums[i],nums[j]);
+                helper(ans,nums,i+1);
+            }
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        helper(ans,nums,0);
+        return ans;
+    }
+};
