@@ -1,0 +1,26 @@
+we can do by sorting and then find nums[k-1] but sorting will take nlogn time
+
+use min heap instead to do in n time
+min heap stores all the values and stores the minimum at the top
+
+min heap can be implemented by priority queue by giving extra parameters
+
+priority_queue<int,vector<int>,greater<int>> q;
+
+
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int,vector<int>,greater<int>> q;
+        for (int i=0;i<k;i++){
+            q.push(nums[k]);
+        }
+        for (int i=k;i<nums.size();i++){
+            if (nums[i]>q.top()){
+                q.pop();
+                q.push(nums[i]);
+            }
+        }
+        return q.top();
+    }
+};
