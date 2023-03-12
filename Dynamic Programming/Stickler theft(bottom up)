@@ -1,0 +1,9 @@
+int FindMaxSum(int arr[], int n)
+    {
+        vector<int> t(n,0);
+        t[0]=arr[0];
+        for (int i=1;i<n;i++){
+            t[i]=max(t[i-2]+arr[i],t[i-1]);
+        }
+        return t[n-1];
+    }
