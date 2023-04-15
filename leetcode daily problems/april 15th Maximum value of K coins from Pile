@@ -1,0 +1,52 @@
+There are n piles of coins on a table. Each pile consists of a positive number of coins of assorted denominations.
+
+In one move, you can choose any coin on top of any pile, remove it, and add it to your wallet.
+
+Given a list piles, where piles[i] is a list of integers denoting the composition of the ith pile from top to bottom, and a positive integer k, return the maximum total value of coins you can have in your wallet if you choose exactly k coins optimally.
+
+ 
+
+Example 1:
+
+
+Input: piles = [[1,100,3],[7,8,9]], k = 2
+Output: 101
+Explanation:
+The above diagram shows the different ways we can choose k coins.
+The maximum total we can obtain is 101.
+Example 2:
+
+Input: piles = [[100],[100],[100],[100],[100],[100],[1,1,1,1,1,1,700]], k = 7
+Output: 706
+Explanation:
+The maximum total can be obtained if we choose all coins from the last pile.
+
+
+class Solution {
+public:
+    int t[1001][2001];
+    int helper(vector<vector<int>> &p,int index,int k){
+        if (k==0 || index>=p.size()){
+            return 0;
+        }
+        if (t[index][k]!=-1){
+            return t[index][k];
+        }
+        int ans=helper(p,index+1,k);
+        int loop=p[index].size()-1;
+        int sum=0;
+       
+       for(int j=0;j<=min(k-1,loop);j++) //
+       {
+           sum=sum+p[index][j];
+           ans=max(ans,sum+helper(p,index+1,k-(j+1)));
+           
+           /*Above we Pass coin-(j+1). Because till j'th index we have taken j+1 coin from that pile.*/
+       }
+       return t[index][k]=ans;
+    }
+    int maxValueOfCoins(vector<vector<int>>& piles, int k) {
+        memset(t,-1,sizeof(t));
+        return helper(piles,0,k);
+    }
+};
