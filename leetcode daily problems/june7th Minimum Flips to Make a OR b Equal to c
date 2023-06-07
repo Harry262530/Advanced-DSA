@@ -1,0 +1,35 @@
+Given 3 positives numbers a, b and c. Return the minimum flips required in some bits of a and b to make ( a OR b == c ). (bitwise OR operation).
+Flip operation consists of change any single bit 1 to 0 or change the bit 0 to 1 in their binary representation.
+
+ 
+
+Example 1:
+
+
+
+Input: a = 2, b = 6, c = 5
+Output: 3
+Explanation: After flips a = 1 , b = 4 , c = 5 such that (a OR b == c)
+Example 2:
+
+Input: a = 4, b = 2, c = 7
+Output: 1
+Example 3:
+
+Input: a = 1, b = 2, c = 3
+Output: 0
+
+
+Step 1: a | b is what we have while c is what we want. An XOR operation finds all different bits, i.e. (a | b) ^ c sets the bits where flip(s) is needed. Then we count the set bits.
+Step 2: There is only one case when two flips are needed: a bit is 0 in c but is 1 in both a and b. An AND operation finds all common 1 bits, i.e. a & b & ((a | b) ^ c) sets the common 1 bits in a, b and the must-flip bits found in Step 1.
+A simpler way to represent Step 2 is a & b & ~c, so for all bit positions where a bit is 0 in c but is 1 in both a and b, the bit is 1 in a & b & ~c
+
+
+class Solution {
+public:
+    int minFlips(int a, int b, int c) {
+        int step1=__builtin_popcount((a|b)^c);
+        int step2=__builtin_popcount(a&b&(~c));
+        return step1+step2;
+    }
+};
