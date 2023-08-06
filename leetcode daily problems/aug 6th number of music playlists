@@ -1,0 +1,48 @@
+Your music player contains n different songs. You want to listen to goal songs (not necessarily different) during your trip. To avoid boredom, you will create a playlist so that:
+
+Every song is played at least once.
+A song can only be played again only if k other songs have been played.
+Given n, goal, and k, return the number of possible playlists that you can create. Since the answer can be very large, return it modulo 109 + 7.
+
+ 
+
+Example 1:
+
+Input: n = 3, goal = 3, k = 1
+Output: 6
+Explanation: There are 6 possible playlists: [1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], and [3, 2, 1].
+Example 2:
+
+Input: n = 2, goal = 3, k = 0
+Output: 6
+Explanation: There are 6 possible playlists: [1, 1, 2], [1, 2, 1], [2, 1, 1], [2, 2, 1], [2, 1, 2], and [1, 2, 2].
+Example 3:
+
+Input: n = 2, goal = 3, k = 1
+Output: 2
+Explanation: There are 2 possible playlists: [1, 2, 1] and [2, 1, 2].
+
+class Solution {
+public:
+   int nn;
+   long long mod = 1e9+7;
+   long long dp[101][101];
+   long long help(int num,int g,int k){
+        if(g==0){
+            if(num==nn)return 1;
+            else return 0;
+        }
+        if(dp[num][g]!=-1)return dp[num][g];
+        long long ans=0;
+        ans = (ans + ((nn-num)*help(num+1,g-1,k))%mod)%mod;
+        if(num>=k){
+            ans = (ans + ((num-k)*help(num,g-1,k))%mod)%mod;
+        }
+        return dp[num][g] = ans%mod;
+    }
+    int numMusicPlaylists(int n, int g, int k) {
+        nn=n;
+        memset(dp,-1,sizeof(dp));
+        return help(0,g,k);
+    }
+};
