@@ -1,0 +1,55 @@
+Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell.
+
+The distance between two adjacent cells is 1.
+
+ 
+
+Example 1:
+
+
+Input: mat = [[0,0,0],[0,1,0],[0,0,0]]
+Output: [[0,0,0],[0,1,0],[0,0,0]]
+Example 2:
+
+
+Input: mat = [[0,0,0],[0,1,0],[1,1,1]]
+Output: [[0,0,0],[0,1,0],[1,2,1]]
+
+
+class Solution {
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        int n=mat.size();
+        int m=mat[0].size();
+        vector<vector<int>> visited(n,vector<int>(m,0));
+        vector<vector<int>> dist(n,vector<int>(m,0));
+        queue<pair<pair<int,int>,int>> q;
+        for (int i=0;i<n;i++){
+            for (int j=0;j<m;j++){
+                if (mat[i][j]==0){
+                    q.push({{i,j},0});
+                    visited[i][j]=1;
+                }
+            }
+        }
+        int rowrange[]={0,-1,0,1};
+        int colrange[]={-1,0,1,0};
+        while (!q.empty()){
+            auto temp=q.front();
+            int r=temp.first.first;
+            int c=temp.first.second;
+            int d=temp.second;
+            dist[r][c]=d;
+            q.pop();
+            for (int i=0;i<4;i++){
+                int nrow=r+rowrange[i];
+                int ncol=c+colrange[i];
+                if (nrow>=0 && nrow<n && ncol >=0 && ncol<m && !visited[nrow][ncol]){
+                    visited[nrow][ncol]=1;
+                    q.push({{nrow,ncol},d+1});
+                }
+            }
+        }
+        return dist;
+    }
+};
